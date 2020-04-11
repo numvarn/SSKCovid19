@@ -21,4 +21,4 @@ SSK Fight Covid 19
 
 # SSKCovid19 (Sisaket Fight Covid-19)
 
-![image](./imgs/001.jpg)
+![image](./imgs/001.jpg | width=250)
