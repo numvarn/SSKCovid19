@@ -10,16 +10,5 @@ SSK Fight Covid 19
 
 หรือมีการประมวลผลข้อมูลต่าง ๆ ในส่วนของ Mobile Application เช่น การแก้ไขข้อมูลประวัติสมาชิก หรือ การส่งพิกัดที่อยู่ปัจจุบันของสมาชิก นั้น Mobile Application จะทำการประมวลผล และส่งข้อมูลผ่าน API เพื่อให้ Web Application ทำการบันทึกต่อไป
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# SSKCovid19
+# SSKCovid19 (Sisaket Fight Covid-19)
