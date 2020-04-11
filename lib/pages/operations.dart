@@ -7,7 +7,6 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/cslib/profileFileProcess.dart';
 import 'package:sskcovid19/pages/login.dart';
-import 'package:sskcovid19/pages/register.dart';
 import 'package:sskcovid19/pages/checkin.dart';
 import 'package:sskcovid19/pages/profile.dart';
 
@@ -29,7 +28,7 @@ class _OperationPageState extends State<OperationPage> {
   AuthenFileProcess authenFileProcess = new AuthenFileProcess();
   ProfileFileProcess profileFileProcess = new ProfileFileProcess();
 
-  String profileName;
+  String profileName = "waiting";
 
   Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
@@ -39,6 +38,26 @@ class _OperationPageState extends State<OperationPage> {
   void initState() {
     super.initState();
     getProfileAPI();
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('หยุดการทำงานโปรแกรม'),
+        content: new Text('คุณต้องการหยุดการทำงานโปรแกรม ?'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('ไม่ใช่'),
+          ),
+          new FlatButton(
+            onPressed: () => exit(0), //Navigator.of(context).pop(true),
+            child: new Text('ใช่'),
+          ),
+        ],
+      ),
+    )) ?? false;
   }
 
   @override
@@ -92,12 +111,7 @@ class _OperationPageState extends State<OperationPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => RegisterPage()),
-          );
-        },
+        onPressed: () { },
         child: Text("แบบประเมินความเสี่ยง",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -122,44 +136,56 @@ class _OperationPageState extends State<OperationPage> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('SSK fight covid-19'),
-        automaticallyImplyLeading: false,
+    final historyButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color(0xff01A0C7),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          logoutProcess();
+        },
+        child: Text("ประวัติการเดินทาง",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(36.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(this.profileName.toString(),
-                style: new TextStyle(color: hexToColor("#3371ff"), fontSize: 25.0),),
-              SizedBox(height: 35.0),
-              checkInButton,
-              SizedBox(height: 35.0),
-              profileButton,
-              SizedBox(height: 35.0),
-              assessmentButton,
-              SizedBox(height: 35.0),
-              logoutButton,
-            ],
-          ),
+    );
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('SSK fight covid-19'),
+          automaticallyImplyLeading: false,
+        ),
+        body: Container(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(this.profileName.toString(),
+                      style: new TextStyle(color: hexToColor("#3371ff"), fontSize: 25.0),),
+                    SizedBox(height: 35.0),
+                    checkInButton,
+                    SizedBox(height: 35.0),
+                    historyButton,
+                    SizedBox(height: 35.0),
+                    profileButton,
+                    SizedBox(height: 35.0),
+                    assessmentButton,
+                    SizedBox(height: 35.0),
+                    logoutButton,
+                  ],
+                ),
+              ),
+            ),
         ),
       ),
-      bottomNavigationBar: new BottomNavigationBar(items: [
-        new BottomNavigationBarItem(
-          icon: new Icon(Icons.home),
-          title: new Text("Home"),
-        ),
-        new BottomNavigationBarItem(
-            icon: Icon(Icons.person), title: Text('Profile')),
-        new BottomNavigationBarItem(
-          icon: new Icon(Icons.search),
-          title: new Text("Search"),
-        )
-      ]),
     );
   }
 
@@ -185,7 +211,7 @@ class _OperationPageState extends State<OperationPage> {
   }
 
   void getProfileAPI() async {
-    if (profileName == null) {
+    if (profileName == "waiting") {
       var url = "https://ssk-covid19.herokuapp.com/get/myuser";
 
       //Get user authentication token form auth file
