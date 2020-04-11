@@ -9,6 +9,7 @@ import 'package:sskcovid19/cslib/profileFileProcess.dart';
 import 'package:sskcovid19/pages/login.dart';
 import 'package:sskcovid19/pages/checkin.dart';
 import 'package:sskcovid19/pages/profile.dart';
+import 'package:sskcovid19/pages/checkedin_tracker.dart';
 
 // Operation Page After login
 class OperationPage extends StatefulWidget {
@@ -144,7 +145,10 @@ class _OperationPageState extends State<OperationPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          logoutProcess();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TrackerPage()),
+          );
         },
         child: Text("ประวัติการเดินทาง",
             textAlign: TextAlign.center,
