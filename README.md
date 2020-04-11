@@ -2,6 +2,10 @@
 
 SSK Fight Covid 19
 
+สำหรับโปรเจคนี้ ผู้พัฒนาได้พัฒนาขึ้นมาอย่างเร่งด้วย โดยเป็นการทำงานร่วมกันระหว่าง Mobile Application และ Web Application ที่สื่อสารกันผ่าน REAT Full Webserivces
+
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
