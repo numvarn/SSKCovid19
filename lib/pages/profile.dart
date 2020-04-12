@@ -141,9 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.nationality = text;
-        });
+        profile.nationality = text.trim();
       },
     );
 
@@ -158,9 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.occupation = text;
-        });
+        profile.occupation = text.trim();
       },
     );
 
@@ -176,9 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.officeAddress = text;
-        });
+        profile.officeAddress = text.trim();
       },
     );
 
@@ -193,9 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.officeSubDistrict = text;
-        });
+        profile.officeSubDistrict = text.trim();
       },
     );
 
@@ -210,9 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.officeDistrict = text;
-        });
+        profile.officeDistrict = text.trim();
       },
     );
 
@@ -227,9 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.officeProvince = text;
-        });
+        profile.officeProvince = text.trim();
       },
     );
 
@@ -245,9 +233,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.officePhone = text;
-        });
+        profile.officePhone = text.trim();
       },
     );
 
@@ -263,9 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.homeAddress = text;
-        });
+        profile.homeAddress = text.trim();
       },
     );
 
@@ -280,9 +264,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.homeSubDistrict = text;
-        });
+        profile.homeSubDistrict = text.trim();
       },
     );
 
@@ -297,9 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.homeDistrict = text;
-        });
+        profile.homeDistrict = text.trim();
       },
     );
 
@@ -314,9 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.homeProvince = text;
-        });
+        profile.homeProvince = text.trim();
       },
     );
 
@@ -332,9 +310,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.mobilePhone = text;
-        });
+        profile.mobilePhone = text.trim();
       },
     );
 
@@ -350,9 +326,7 @@ class _ProfilePageState extends State<ProfilePage> {
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       onChanged: (text){
-        setState(() {
-          profile.age = int.parse(text);
-        });
+        profile.age = int.parse(text.trim());
       },
     );
 

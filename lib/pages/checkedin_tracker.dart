@@ -5,6 +5,7 @@ import 'package:http/http.dart' as Http;
 import 'package:intl/intl.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
+import 'package:sskcovid19/pages/checkedin_tracker_maps.dart';
 
 class TrackerPage extends StatefulWidget {
   TrackerPage({Key key}) : super(key: key);
@@ -37,33 +38,19 @@ class _TrackerPageState extends State<TrackerPage> {
     }
 
     if (token != null && loadCheck == false) {
-      setState(() {
-        loadCheck = true;
-      });
+      //Prevent Next Load
+      loadCheck = true;
 
       var response = await Http.get(
           "https://ssk-covid19.herokuapp.com/get/mycheckedin",
           headers: {HttpHeaders.authorizationHeader: "Token $token"}
           );
-      var body = utf8.decode(response.bodyBytes);
 
-      setState(() {
-        jsonData = json.decode(body);
-      });
+      jsonData = json.decode(utf8.decode(response.bodyBytes));
 
-    }
-
-    return token;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if(jsonData != null) {
       for (var u in jsonData['results']) {
         //Convert DateTime
         var dateCreate = DateTime.parse(u['date_created']).toLocal();
-        print(u['date_created']);
-        print(dateCreate);
 
         CheckedInHistory history = CheckedInHistory(
             u['account'],
@@ -81,6 +68,11 @@ class _TrackerPageState extends State<TrackerPage> {
       }
     }
 
+    return token;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -99,19 +91,32 @@ class _TrackerPageState extends State<TrackerPage> {
                   itemCount: dataList.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      child: ListTile(
-                        leading: FlutterLogo(),
-                        title: Text(
-                            '${dataList[index].route}, \n'
-                                '${dataList[index].subDistrict}, \n'
-                                '${dataList[index].district}, \n'
-                                '${dataList[index].province}, '
-                                '${dataList[index].postcode}, \n'
-                        ),
-                        subtitle: Text(
-                            '${dataList[index].date} \n'
-                                '[${dataList[index].latitude}, '
-                                '${dataList[index].longitude}]'
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TrackerMapsPage(),
+                                settings: RouteSettings(
+                                  arguments: dataList[index], //dataList[index].latitude.toString()+","+dataList[index].longitude.toString(),
+                                ),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: FlutterLogo(),
+                          title: Text(
+                              '${dataList[index].route}, '
+                                  '${dataList[index].subDistrict}, \n'
+                                  '${dataList[index].district}, \n'
+                                  '${dataList[index].province}, '
+                                  '${dataList[index].postcode}, \n'
+                          ),
+                          subtitle: Text(
+                              '${dataList[index].date} \n'
+                                  '[${dataList[index].latitude}, '
+                                  '${dataList[index].longitude}]'
+                          ),
                         ),
                       ),
                     );

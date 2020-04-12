@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
@@ -24,6 +25,26 @@ class _LogInPageState extends State<LogInPage> {
   ProgressDialog pr;
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('หยุดการทำงานโปรแกรม'),
+        content: new Text('คุณต้องการหยุดการทำงานโปรแกรม ?'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('ไม่ใช่'),
+          ),
+          new FlatButton(
+            onPressed: () => exit(0), //Navigator.of(context).pop(true),
+            child: new Text('ใช่'),
+          ),
+        ],
+      ),
+    )) ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +105,51 @@ class _LogInPageState extends State<LogInPage> {
       ),
     );
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+        child:Scaffold(
+          appBar: AppBar(
+            title: Text('Login'),
+            automaticallyImplyLeading: false,
+          ),
+
+          body: Center(
+            child: SingleChildScrollView (
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 155.0,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(height: 45.0),
+                  emailField,
+                  SizedBox(height: 25.0),
+                  passwordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  loginButon,
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  regisButon,
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+
+      Scaffold(
       appBar: AppBar(
         title: Text('Login'),
         automaticallyImplyLeading: false,
