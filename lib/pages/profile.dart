@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as Http;
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -303,6 +304,10 @@ class _ProfilePageState extends State<ProfilePage> {
       obscureText: false,
       style: style,
       keyboardType: TextInputType.number,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(10),
+        WhitelistingTextInputFormatter.digitsOnly,
+      ],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: 'เบอร์โทรศัพย์มือถือ*',
@@ -319,6 +324,10 @@ class _ProfilePageState extends State<ProfilePage> {
       obscureText: false,
       style: style,
       keyboardType: TextInputType.number,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(2),
+        WhitelistingTextInputFormatter.digitsOnly,
+      ],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: 'อายุ*',

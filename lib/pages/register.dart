@@ -27,7 +27,7 @@ class RegisterPage extends StatelessWidget {
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "First Name",
+          hintText: "ชื่อจริง",
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
@@ -38,7 +38,7 @@ class RegisterPage extends StatelessWidget {
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Last Name",
+          hintText: "นามสกุล",
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
@@ -49,7 +49,7 @@ class RegisterPage extends StatelessWidget {
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
+          hintText: "อีเมล",
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
@@ -60,7 +60,7 @@ class RegisterPage extends StatelessWidget {
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
+          hintText: "รหัสผ่าน",
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
@@ -75,7 +75,7 @@ class RegisterPage extends StatelessWidget {
         onPressed: () {
           regisAccount(context);
         },
-        child: Text("Register Accunt",
+        child: Text("ลงทะเบียนผู้ใช้งานใหม่",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -84,7 +84,7 @@ class RegisterPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register your account"),
+        title: Text("ลงทะเบียนใช้งานระบบ"),
       ),
       body: Center(
         child: SingleChildScrollView (
@@ -117,38 +117,40 @@ class RegisterPage extends StatelessWidget {
     );
   }
   Future<void> regisAccount(context) async {
-    pr = new ProgressDialog(context);
-    pr.style(
-      message: '  Waiting...',
-      progressWidget: CircularProgressIndicator(),
-    );
+    if(firstNameController.text != "" && lastNameController.text != "" && emailController.text != "" && passwordController.text != "") {
+      pr = new ProgressDialog(context);
+      pr.style(
+        message: '  Waiting...',
+        progressWidget: CircularProgressIndicator(),
+      );
 
-    pr.show();
+      pr.show();
 
-    var url = "https://ssk-covid19.herokuapp.com/api/regis";
+      var url = "https://ssk-covid19.herokuapp.com/api/regis";
 
-    Map<String, String> data = {
-      "first_name": firstNameController.text.trim(),
-      "last_name": lastNameController.text.trim(),
-      "email": emailController.text.trim(),
-      "username": emailController.text.trim(),
-      "password": passwordController.text.trim()
-    };
+      Map<String, String> data = {
+        "first_name": firstNameController.text.trim(),
+        "last_name": lastNameController.text.trim(),
+        "email": emailController.text.trim(),
+        "username": emailController.text.trim(),
+        "password": passwordController.text.trim()
+      };
 
-    await Http.post(
-        url,
-        body: data
-    ).then((response) {
-      final responseJson = json.decode(response.body);
-      if (responseJson['status'] == 'success') {
-        pr.hide();
-        _showAlertRegisterSuccess(context);
-      }
-      else {
-        pr.hide();
-        _showAlertAccountExist(context);
-      }
-    });
+      await Http.post(
+          url,
+          body: data
+      ).then((response) {
+        final responseJson = json.decode(response.body);
+        if (responseJson['status'] == 'success') {
+          pr.hide();
+          _showAlertRegisterSuccess(context);
+        }
+        else {
+          pr.hide();
+          _showAlertAccountExist(context);
+        }
+      });
+    }
   }
 
   void _showAlertAccountExist(BuildContext context) {

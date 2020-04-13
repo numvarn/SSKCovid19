@@ -53,20 +53,47 @@ class _TrackerMapsPageState extends State<TrackerMapsPage> {
       appBar: AppBar(
         title: Text('ตำแหน่งที่เคยเดินทาง'),
       ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 15.0,
-        ),
-        markers: _markers.values.toSet(),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        label: Text('ย้อยกลับ'),
-        icon: Icon(Icons.arrow_back),
+      body: Column(
+          children: [
+            Container(
+              child: Card(
+                elevation: 2.0,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.50,
+                  child: GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 15.0,
+                    ),
+                    markers: _markers.values.toSet(),
+                    rotateGesturesEnabled: false,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+                height: MediaQuery.of(context).size.height * 0.35,
+                child: Card(
+                  elevation: 1,
+                  child: Container(
+                    child: ListTile(
+                      leading: FlutterLogo(),
+                      title: Text(""
+                          "ถนน ${history.route}\n"
+                          "${history.subDistrict}\n"
+                          "${history.district}\n"
+                          "จังหวัด ${history.province}\n\n"
+                          "เวลา ${history.date}\n"
+                          "พิกัด ${history.latitude}, ${history.longitude}"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
       ),
     );
   }

@@ -52,6 +52,10 @@ class _TrackerPageState extends State<TrackerPage> {
         //Convert DateTime
         var dateCreate = DateTime.parse(u['date_created']).toLocal();
 
+        if(u['route'] == null) {
+          u['route'] = "Unnamed Road";
+        }
+
         CheckedInHistory history = CheckedInHistory(
             u['account'],
             double.parse(u['latitude']),
@@ -98,7 +102,7 @@ class _TrackerPageState extends State<TrackerPage> {
                             MaterialPageRoute(
                                 builder: (context) => TrackerMapsPage(),
                                 settings: RouteSettings(
-                                  arguments: dataList[index], //dataList[index].latitude.toString()+","+dataList[index].longitude.toString(),
+                                  arguments: dataList[index],
                                 ),
                             ),
                           );
@@ -133,7 +137,6 @@ class _TrackerPageState extends State<TrackerPage> {
     );
   }
 }
-
 
 class CheckedInHistory {
   int account;
