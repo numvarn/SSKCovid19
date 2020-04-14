@@ -190,7 +190,7 @@ class _LogInPageState extends State<LogInPage> {
             FlatButton(
               child: Text('Ok'),
               onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop('dialog');
+                Navigator.pop(context, true);
               },
             )
           ],

@@ -10,6 +10,7 @@ import 'package:sskcovid19/pages/login.dart';
 import 'package:sskcovid19/pages/checkin.dart';
 import 'package:sskcovid19/pages/profile.dart';
 import 'package:sskcovid19/pages/checkedin_tracker.dart';
+import 'package:sskcovid19/pages/self_screening.dart';
 
 // Operation Page After login
 class OperationPage extends StatefulWidget {
@@ -112,7 +113,12 @@ class _OperationPageState extends State<OperationPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () { },
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelfScreenPage()),
+          );
+        },
         child: Text("แบบประเมินความเสี่ยง",
             textAlign: TextAlign.center,
             style: style.copyWith(
