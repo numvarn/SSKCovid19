@@ -367,7 +367,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final submitButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue, //Color(0xff01A0C7),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -523,6 +523,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _showAlertUpdateSuccessed(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("แก้ไขข้อมูลแล้ว"),
           content: Text("ประวัติสามาชิกของท่านได้ถูกปรับปรุงให้เป็นปัจจุบันแล้ว"),
@@ -544,6 +545,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _showAlertUpdateFail(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("เกิดความผิดพลาด"),
           content: Text("ข้อมูลของคุณถูกยังไม่ถูกบันทึกเข้าระบบ !!"),

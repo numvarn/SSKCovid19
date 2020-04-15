@@ -155,6 +155,7 @@ class _CheckinPageState extends State<CheckinPage> {
   void _showAlertCheckinSuccessed(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("ส่งพิกัดที่อยู่ปัจจุบันเรียบร้อย"),
           content: Text("พิกัดปัจจุบันของคุณถูกรายงานเข้าระบบเรียบร้อยแล้ว"),
@@ -176,6 +177,7 @@ class _CheckinPageState extends State<CheckinPage> {
   void _showAlertCheckinFail(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("เกิดความผิดพลาด"),
           content: Text("พิกัดปัจจุบันของคุณถูกยังไม่ถูกรายงานเข้าระบบ !!"),

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'cslib/authenFileProcess.dart';
 import 'pages/login.dart';
 import 'package:sskcovid19/pages/operations.dart';
@@ -34,40 +37,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void initState() {
     super.initState();
-    _checkAuthentication();
+    startTime();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // Prevent Screen Rotation
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 180.0,
+              child: Image.asset(
+                "assets/images/logo.png",
+                fit: BoxFit.contain,
+              ),
+            ),
+            SizedBox(height: 35.0),
             CircularProgressIndicator(),
-            Text(
-              '\n\nชาวศรีสะเกษ',
-            ),
-            Text(
-              'ร่วมฝ่าภาวะวิกฤติการระบาดเชื้อ Covid-19 ไปด้วยกัน\n\n',
-            ),
-            RaisedButton(
-              child: Text('Use Application'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LogInPage()
-                  ),
-                );
-              },
-            ),
           ],
         ),
       ),
     );
+  }
+
+  startTime() async {
+    var duration = new Duration(seconds: 3);
+    return new Timer(duration, _checkAuthentication);
   }
 
   void _checkAuthentication() {

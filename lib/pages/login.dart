@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/pages/operations.dart';
@@ -16,12 +18,11 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  final RoundedLoadingButtonController _btnController = new RoundedLoadingButtonController();
+
   // TextField Controller
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-
-  //Progress Dialog
-  //ProgressDialog pr;
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
@@ -70,30 +71,27 @@ class _LogInPageState extends State<LogInPage> {
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          _signIn();
-        },
+    final loginButton = RoundedLoadingButton(
         child: Text("เข้าสู่ระบบ",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+                color: Colors.white, fontWeight: FontWeight.bold)
+        ),
+        controller: _btnController,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.lightBlue,
+        onPressed: () {
+          _signIn();
+        },
     );
 
-    final regisButon = Material(
-      elevation: 5.0,
+    final registerButton = Material(
+      elevation: 2.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        padding: EdgeInsets.fromLTRB(10.0, 12.0, 10.0, 12.0),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),);
         },
@@ -105,7 +103,7 @@ class _LogInPageState extends State<LogInPage> {
     );
 
     return WillPopScope(
-      onWillPop: _onWillPop,
+        onWillPop: _onWillPop,
         child:Scaffold(
           appBar: AppBar(
             title: Text('เช้าใช้งานระบบ'),
@@ -120,27 +118,21 @@ class _LogInPageState extends State<LogInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 155.0,
+                    height: 180.0,
                     child: Image.asset(
                       "assets/images/logo.png",
                       fit: BoxFit.contain,
                     ),
                   ),
-                  SizedBox(height: 45.0),
+                  SizedBox(height: 20.0),
                   emailField,
                   SizedBox(height: 25.0),
                   passwordField,
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  loginButon,
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  regisButon,
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  SizedBox(height: 35.0),
+                  loginButton,
+                  SizedBox(height: 15.0),
+                  registerButton,
+                  SizedBox(height: 15.0),
                 ],
               ),
             ),
@@ -161,7 +153,6 @@ class _LogInPageState extends State<LogInPage> {
       var response = await Http.post(url, body:data);
 
       final responseJson = json.decode(response.body);
-
       if(responseJson['token'] != null) {
         String data = '{"token": "${responseJson['token']}"}';
 
@@ -174,15 +165,18 @@ class _LogInPageState extends State<LogInPage> {
         );
       } else {
         _showAlertLoginFail(context);
+        _btnController.stop();
       }
     } else {
       _showAlertLoginFail(context);
+      _btnController.stop();
     }
   }
 
   void _showAlertLoginFail(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("Invalid Username/Password"),
           content: Text("Please, check your username or password"),

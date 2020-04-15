@@ -68,7 +68,7 @@ class RegisterPage extends StatelessWidget {
     final regisButon = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -94,7 +94,7 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 125.0,
+                height: 180.0,
                 child: Image.asset(
                   "assets/images/logo.png",
                   fit: BoxFit.contain,

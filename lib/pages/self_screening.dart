@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:http/http.dart' as Http;
@@ -50,7 +50,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
     final assessmentButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -543,12 +543,16 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
     int riskScore;
     String suggest;
 
-    //Case 1. No Risk
+    //Case 1. No Risk -- ok
     if (groupQ1 == 1 && groupQ2 == 1 && groupQ3 == 1 && groupQ4 == 1 && groupQ5 == 1 && groupQ6 == 1 && groupQ7 == 1 && groupQ8 == 1) {
       riskScore = 1;
       suggest = "ล้างมือ สวมหน้ากาก หลีกเลี่ยงที่แออัด";
     }
-    //Case 2. Risk 2
+    else if (groupQ1 == 1 && groupQ2 == 1 && groupQ3 == 1 && groupQ4 == 1 && groupQ5 == 1 && groupQ6 == 1 && groupQ7 == 2 && groupQ8 == 1) {
+      riskScore = 1;
+      suggest = "ล้างมือ สวมหน้ากาก หลีกเลี่ยงที่แออัด";
+    }
+    //Case 2. Risk 2 -- ok
     else if (groupQ1 == 2 && groupQ2 == 1 && groupQ3 == 1 && groupQ4 == 1 && groupQ5 == 1 && groupQ6 == 1 && groupQ7 == 1 && groupQ8 == 1) {
       riskScore = 2;
       suggest = "อาจเป็นโรคอื่น ถ้า 2 วัน อาการไม่ดีขึ้นให้ไปพบแพทย์";
@@ -558,9 +562,15 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
       suggest = "อาจเป็นโรคอื่น ถ้า 2 วัน อาการไม่ดีขึ้นให้ไปพบแพทย์";
     }
     //Case 3. Risk 3
-    else if (groupQ1 == 1 && groupQ2 == 1 && groupQ3 == 2) {
+    else if (groupQ1 == 1 && groupQ2 == 1 && (groupQ3 == 2 || groupQ4 == 2 || groupQ5 == 2 || groupQ6 == 2 || groupQ7 == 2 || groupQ8 == 2)) {
       riskScore = 3;
-      suggest = "เนื่องจากท่านมีประวัติเดินทางจากพื้นที่เสี่ยง ให้กักตัว 14 วัน พร้อมเฝ้าระวังอาการ ถ้ามีอาการไข้ ร่วมกับ อาการระบบทางเดินหายใจ ให้ติดต่อสถานพยาบาลทันที";
+      if (groupQ3 == 2 && groupQ4 == 1) {
+        suggest = "เนื่องจากท่านมีประวัติเดินทางจากพื้นที่เสี่ยง ให้กักตัว 14 วัน พร้อมเฝ้าระวังอาการ ถ้ามีอาการไข้ ร่วมกับ อาการระบบทางเดินหายใจ ให้ติดต่อสถานพยาบาลทันที";
+      } else if (groupQ4 == 2) {
+        suggest = "เนื่องจากท่านมีประวัติอยู่ใกล้ชิดผู้ป่วยยืนยัน COVID-19 ให้ติดต่อเจ้าหน้าที่ควบคุมโรค เพื่อประเมินความเสี่ยง";
+      } else {
+        suggest = "ให้เฝ้าระวังอาการตนเอง ถ้ามีอาการไข้ ร่วมกับ อาการระบบทางเดินหายใจ (มีทั้ง 2 อาการ) ให้ติดต่อสถานพยาบาลทันที";
+      }
     }
     //Case 4. Risk 4
     else if ((groupQ1 == 2 && groupQ2 == 2) && (groupQ3 == 2 || groupQ4 == 2 || groupQ5 == 2 || groupQ6 == 2 || groupQ7 == 2 || groupQ8 == 2)){
@@ -662,7 +672,7 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
     final submitButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -676,17 +686,17 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
       ),
     );
 
-    final reAssessmentButon = Material(
+    final reAssessmentButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.lightBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SelfScreenPage())
+            MaterialPageRoute(builder: (context) => SelfScreenPage()),
           );
         },
         child: Text("ประเมินใหม่อีกครั้ง",
@@ -702,76 +712,85 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Card(
-                elevation: 2,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.60,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 30.0),
-                      Text("ผลการประเมินของท่าน", style: headStyle),
+        child: SingleChildScrollView (
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Card(
+                  elevation: 2,
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.60,
+                    width: MediaQuery.of(context).size.width * 0.90,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 30.0),
+                        Text("ผลการประเมินของท่าน", style: headStyle),
 
-                      SizedBox(height: 30.0),
-                      Text("ความเสี่ยงรวม", style: labelStyle),
-                      SizedBox(height: 10.0),
-                      Text("${results.riskScore}", style: scoreStyle),
+                        SizedBox(height: 30.0),
+                        Text("ความเสี่ยงรวม", style: labelStyle),
+                        SizedBox(height: 10.0),
+                        Text("${results.riskScore}", style: scoreStyle),
 
-                      SizedBox(height: 30.0),
-                      Text("คำแนะนำเบื้องต้น", style: labelStyle),
-                      SizedBox(height: 10.0),
-                      Text("ล้างมือ สวมหน้ากาก หลีกเลี่ยงที่แออัด", style: suggestStyle),
+                        SizedBox(height: 30.0),
+                        Text("คำแนะนำเบื้องต้น", style: labelStyle),
+                        SizedBox(height: 10.0),
+                        Text("ล้างมือ สวมหน้ากาก หลีกเลี่ยงที่แออัด", style: suggestStyle),
 
-                      SizedBox(height: 30.0),
-                      Text("คำแนะนำแบบเจาะจง", style: labelStyle),
-                      SizedBox(height: 10.0),
-                      SizedBox(
-                        width: 300,
-                        child: Text("${results.riskSuggession}", style: suggestStyle),
-                      ),
-                    ],
+                        SizedBox(height: 30.0),
+                        Text("คำแนะนำแบบเจาะจง", style: labelStyle),
+                        SizedBox(height: 10.0),
+                        SizedBox(
+                          width: 300,
+                          child: Center(
+                            child: Text("${results.riskSuggession}", style: suggestStyle),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                children: <Widget>[
-                  submitButton,
-                  SizedBox(height: 15.0),
-                  reAssessmentButon,
-                ],
+              Container(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  children: <Widget>[
+                    submitButton,
+                    SizedBox(height: 15.0),
+                    reAssessmentButton,
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void _submitAssessment(BuildContext context) {
+  void _submitAssessment(context) async{
 
-    pr = new ProgressDialog(context);
+    pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: true,
+    );
+
     pr.style(
-      message: '  Sending Result...',
+      message: '  Sending Data...',
       progressWidget: CircularProgressIndicator(),
     );
 
     Map<String, String> data = {
-      "account": "1",
+      "account": userID.toString(),
       "assessment_score": results.riskScore.toString(),
       "assessment_suggest": results.riskSuggession,
     };
 
-    pr.show();
+    await pr.show();
 
     //Sending Location to API
     var response = Http.post(
@@ -780,11 +799,9 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
       headers: {HttpHeaders.authorizationHeader: "Token $tokenKey"},
     );
 
-    pr.hide();
-
     response.then((value){
+      pr.hide();
       final bodyJson = json.decode(value.body);
-      print(bodyJson);
       if(bodyJson['status'] == 'success'){
         _showAlertSubmitSuccessed(context);
       } else {
@@ -794,9 +811,10 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
 
   }
 
-  void _showAlertSubmitSuccessed(BuildContext context) {
+  void _showAlertSubmitSuccessed(context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("บันทึกผลเรียบร้อย"),
           content: Text("ทำการบันทึกผลการประเมินความเสี่ยงในการติดเชื้อของท่านแล้ว"),
@@ -815,9 +833,10 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
     );
   }
 
-  void _showAlertSubmitFail(BuildContext context) {
+  void _showAlertSubmitFail(context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: Text("ไม่สามารถบันทึกข้อมูล"),
           content: Text("ไม่สามารถบันทึกผลการประเมินของท่านได้ กรุณาลองใหม่อีกครั้ง"),

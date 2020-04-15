@@ -6,6 +6,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/cslib/profileFileProcess.dart';
+import 'package:sskcovid19/cslib/sideMenu.dart';
 import 'package:sskcovid19/pages/login.dart';
 import 'package:sskcovid19/pages/checkin.dart';
 import 'package:sskcovid19/pages/profile.dart';
@@ -25,6 +26,8 @@ class _OperationPageState extends State<OperationPage> {
 
   //Progress Dialog
   ProgressDialog pr;
+
+  var btColors = Colors.lightBlue;
 
   //Read config file
   AuthenFileProcess authenFileProcess = new AuthenFileProcess();
@@ -69,7 +72,7 @@ class _OperationPageState extends State<OperationPage> {
     final checkInButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: btColors,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -89,7 +92,7 @@ class _OperationPageState extends State<OperationPage> {
     final profileButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: btColors,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -109,7 +112,7 @@ class _OperationPageState extends State<OperationPage> {
     final assessmentButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: btColors,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -129,7 +132,7 @@ class _OperationPageState extends State<OperationPage> {
     final logoutButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: btColors,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -146,7 +149,7 @@ class _OperationPageState extends State<OperationPage> {
     final historyButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: btColors,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -166,9 +169,10 @@ class _OperationPageState extends State<OperationPage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text('SSK fight covid-19'),
-          automaticallyImplyLeading: false,
+          title: Text('ศรีสะเกษสู้โควิด 19'),
+          //automaticallyImplyLeading: false,
         ),
         body: Container(
             child: Center(
