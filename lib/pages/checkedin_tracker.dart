@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/pages/checkedin_tracker_maps.dart';
@@ -15,7 +16,17 @@ class TrackerPage extends StatefulWidget {
 }
 
 class _TrackerPageState extends State<TrackerPage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
+
+  TextStyle titleStyle = GoogleFonts.prompt(
+    fontSize: 16,
+  );
+
+  TextStyle subTitleStyle = GoogleFonts.prompt(
+    fontSize: 12,
+  );
 
   //Read config file
   AuthenFileProcess authenFileProcess = new AuthenFileProcess();
@@ -81,6 +92,7 @@ class _TrackerPageState extends State<TrackerPage> {
         appBar: AppBar(
           title: Text(
             'ประวัติการเดินทาง',
+            style: style,
           ),
         ),
         body: Container(
@@ -114,12 +126,14 @@ class _TrackerPageState extends State<TrackerPage> {
                                   '${dataList[index].subDistrict}, \n'
                                   '${dataList[index].district}, \n'
                                   '${dataList[index].province}, '
-                                  '${dataList[index].postcode}, \n'
+                                  '${dataList[index].postcode}',
+                            style: titleStyle,
                           ),
                           subtitle: Text(
                               '${dataList[index].date} \n'
                                   '[${dataList[index].latitude}, '
-                                  '${dataList[index].longitude}]'
+                                  '${dataList[index].longitude}]',
+                            style: subTitleStyle,
                           ),
                         ),
                       ),

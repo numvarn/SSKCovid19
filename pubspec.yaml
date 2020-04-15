@@ -31,11 +31,18 @@ dependencies:
   progress_dialog: ^1.2.0
   intl: ^0.16.1
   rounded_loading_button: ^1.0.0
+  google_fonts: ^0.4.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.7.4
+
+flutter_icons:
+  image_path: "assets/icon/icon.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

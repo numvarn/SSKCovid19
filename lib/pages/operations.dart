@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/cslib/profileFileProcess.dart';
@@ -47,123 +48,52 @@ class _OperationPageState extends State<OperationPage> {
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('หยุดการทำงานโปรแกรม'),
-        content: new Text('คุณต้องการหยุดการทำงานโปรแกรม ?'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('ไม่ใช่'),
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('หยุดการทำงานโปรแกรม'),
+            content: new Text('คุณต้องการหยุดการทำงานโปรแกรม ?'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('ไม่ใช่'),
+              ),
+              new FlatButton(
+                onPressed: () => exit(0), //Navigator.of(context).pop(true),
+                child: new Text('ใช่'),
+              ),
+            ],
           ),
-          new FlatButton(
-            onPressed: () => exit(0), //Navigator.of(context).pop(true),
-            child: new Text('ใช่'),
-          ),
-        ],
-      ),
-    )) ?? false;
+        )) ??
+        false;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get profile name for show on screen
 
-    final checkInButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: btColors,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CheckinPage()),
-          );
-        },
-        child: Text("ส่งพิกัดสถานที่ปัจจุบัน",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+    TextStyle style = GoogleFonts.prompt();
+
+    TextStyle mainStyle = GoogleFonts.prompt(
+      fontWeight: FontWeight.bold,
+      fontSize: 27.0,
+      color: Colors.white,
     );
 
-    final profileButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: btColors,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ProfilePage()),
-          );
-        },
-        child: Text("แก้ไขประวัติสมาชิก",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+    TextStyle descStyle = GoogleFonts.prompt(
+      fontWeight: FontWeight.bold,
+      fontSize: 12.0,
+      color: Colors.white,
     );
 
-    final assessmentButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: btColors,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SelfScreenPage()),
-          );
-        },
-        child: Text("แบบประเมินความเสี่ยง",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+    TextStyle menuHeaderStyle = GoogleFonts.prompt(
+      fontWeight: FontWeight.bold,
+      fontSize: 20.0,
+      color: Colors.black,
     );
 
-    final logoutButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: btColors,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          logoutProcess();
-        },
-        child: Text("ออกจากระบบ",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
-    final historyButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: btColors,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TrackerPage()),
-          );
-        },
-        child: Text("ประวัติการเดินทาง",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+    TextStyle menuDesStyle = GoogleFonts.prompt(
+      fontWeight: FontWeight.bold,
+      fontSize: 12.0,
+      color: Colors.black54,
     );
 
     return WillPopScope(
@@ -171,33 +101,169 @@ class _OperationPageState extends State<OperationPage> {
       child: Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text('ศรีสะเกษสู้โควิด 19'),
-          //automaticallyImplyLeading: false,
+          title: Text('ศรีสะเกษสู้โควิด 19', style: style),
         ),
-        body: Container(
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(36.0),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                child: Center(
+                  child: Card(
+                    elevation: 4,
+                    color: Colors.lightBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(25),
+                      child: SizedBox(
+                        height: 120,//MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: <Widget>[
+                            Text("Sisaket Fight Covid-19", style: mainStyle),
+                            SizedBox(height: 20.0),
+                            Text("เราจะร่วมกันผ่านวิกฤติการระบาดโควิด 19 ไปด้วยกัน", style: descStyle),
+                            SizedBox(height: 10.0),
+                            Text("โดยจังหวัดศรีสะเกษ", style: descStyle),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Card(
+                  elevation: 2,
+                  color: Colors.lightBlue[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckinPage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 80,//MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListTile(
+                          leading: Icon(Icons.location_on, size: 40),//FlutterLogo(),
+                          title: Text("ส่งพิกัดการเดินทาง", style: menuHeaderStyle),
+                          subtitle: Text("บันทึกการเดินทางของท่านเพื่อตรวจสอบการระบาดย้อนหลัง", style: menuDesStyle),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Card(
+                  elevation: 2,
+                  color: Colors.lightBlue[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TrackerPage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 80,//MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListTile(
+                          leading: Icon(Icons.history, size: 40),//FlutterLogo(),
+                          title: Text("ประวัติการเดินทาง", style: menuHeaderStyle),
+                          subtitle: Text("รายการสถานที่ที่ท่านได้ทำการบันทึกพิกัดการเดินทางไว้", style: menuDesStyle),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Card(
+                  elevation: 2,
+                  color: Colors.lightBlue[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SelfScreenPage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 80,//MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListTile(
+                          leading: Icon(Icons.assignment, size: 40),//FlutterLogo(),
+                          title: Text("ประเมินความเสี่ยง", style: menuHeaderStyle),
+                          subtitle: Text("ทำแบบประเมินความเสี่ยงในการได้รับเชื้อ และรับข้อแนะนำในการดูแลตัวเอง", style: menuDesStyle),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Card(
+                  elevation: 2,
+                  color: Colors.lightBlue[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 80,//MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListTile(
+                          leading: Icon(Icons.account_box, size: 40),//FlutterLogo(),
+                          title: Text("ข้อมูลส่วนตัว", style: menuHeaderStyle),
+                          subtitle: Text("บันทึกข้อมูลส่วนตัว เพื่อแจ้งให้เจ้าหน้าที่รับทราบและใช้ในกรณีเกิดเหตุฉุกเฉิน", style: menuDesStyle),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(this.profileName.toString(),
-                      style: new TextStyle(color: hexToColor("#3371ff"), fontSize: 25.0),),
-                    SizedBox(height: 35.0),
-                    checkInButton,
-                    SizedBox(height: 35.0),
-                    historyButton,
-                    SizedBox(height: 35.0),
-                    profileButton,
-                    SizedBox(height: 35.0),
-                    assessmentButton,
-                    SizedBox(height: 35.0),
-                    logoutButton,
+                    SizedBox(height: 20.0),
                   ],
                 ),
               ),
-            ),
+            ],
+          ),
         ),
       ),
     );
@@ -236,24 +302,24 @@ class _OperationPageState extends State<OperationPage> {
       //Get current user profile from API
       var httpResponse = jsonDec.then((val) {
         final token = val['token'];
-        return Http.get(
-            url,
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-              HttpHeaders.authorizationHeader: "Token $token"});
+        return Http.get(url, headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          HttpHeaders.authorizationHeader: "Token $token"
+        });
       });
 
       //Write Profile of current user to json file
-      httpResponse.then((response){
+      httpResponse.then((response) {
         String body = utf8.decode(response.bodyBytes);
         profileFileProcess.writeProfile(body);
 
         final profile = json.decode(body);
 
-        setState((){
-          profileName = profile['results'][0]['first_name']+" "+profile['results'][0]['last_name'];
+        setState(() {
+          profileName = profile['results'][0]['first_name'] +
+              " " +
+              profile['results'][0]['last_name'];
         });
-
       });
     }
   }

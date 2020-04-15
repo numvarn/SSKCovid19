@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as Http;
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/cslib/profileFileProcess.dart';
@@ -19,7 +20,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  //Style
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
+
+  TextStyle styleButton = GoogleFonts.prompt(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   //Read config file
   AuthenFileProcess authenFileProcess = new AuthenFileProcess();
@@ -374,18 +384,17 @@ class _ProfilePageState extends State<ProfilePage> {
         onPressed: () {
           submitProfile();
         },
-        child: Text("แก้ไขประวัติ",
+        child: Text(
+            "แก้ไขประวัติ",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton
+        ),
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'แก้ไขประวัติสมาชิก',
-        ),
+        title: Text('แก้ไขประวัติสมาชิก', style: style),
       ),
       body: Container(
         width: double.infinity,
@@ -421,7 +430,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(profileDisplayName,
-                        style: new TextStyle(color: hexToColor("#3371ff"), fontSize: 25.0),),
+                        style: GoogleFonts.prompt(color: hexToColor("#3371ff"), fontSize: 30.0)),
                       SizedBox(height: 25.0),
                       Text("เพศ"),
                       genderField,

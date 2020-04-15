@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as Http;
 import 'dart:convert';
 
@@ -25,12 +26,28 @@ class SelfScreenPage extends StatefulWidget {
 
 class _SelfScreenPageState extends State<SelfScreenPage> {
   AssessmentResult assResult;
-  TextStyle style = TextStyle(
-      color: Color.fromRGBO(0, 102, 255, 1),
-      fontSize: 20.0
+
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+    color: Colors.white
   );
 
-  TextStyle bulletStyle = TextStyle(
+  TextStyle styleButton = GoogleFonts.prompt(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  TextStyle questionStyle = GoogleFonts.prompt(
+      color: Color.fromRGBO(0, 102, 255, 1),
+      fontSize: 18.0
+  );
+
+  TextStyle answerStyle = GoogleFonts.prompt(
+      fontSize: 16.0
+  );
+
+  TextStyle bulletStyle = GoogleFonts.prompt(
     fontWeight: FontWeight.bold,
     fontSize: 30.0,
     color: Color.fromRGBO(77, 148, 255, 1),
@@ -47,6 +64,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
 
   @override
   Widget build(BuildContext context) {
+
     final assessmentButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -59,14 +77,13 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
         },
         child: Text("ประเมินตนเอง",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton),
       ),
     );
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('แบบประเมินระดับความเสื่ยง'),
+          title: Text('แบบประเมินระดับความเสื่ยง', style: style),
           leading: new IconButton(
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
@@ -92,7 +109,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                           leading: Text("1", style: bulletStyle),
                           title: Text(
                               "ผู้ป่วยมีอุณหภูมิร่างกายตั้งแต่ 37.5 องศาขึ้นไป หรือ ให้ประวัติว่ามีไข้",
-                              style: style
+                              style: questionStyle
                           ),
                         ),
                       ),
@@ -113,7 +130,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ต่ำกว่า 37.5"),
+                          title: Text("ต่ำกว่า 37.5", style: answerStyle),
                         ),
                       ),
                     ),
@@ -134,7 +151,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("สูงกว่าหรือเท่ากับ 37.5"),
+                          title: Text("สูงกว่าหรือเท่ากับ 37.5", style: answerStyle),
                         ),
                       ),
                     ),
@@ -148,7 +165,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("2", style: bulletStyle),
-                          title: Text("ผู้ป่วยมีอาการระบบทางเดินหายใจ อย่างใดอย่างหนึ่งดังต่อไปนี้ \"ไอ น้ำมูก เจ็บคอ หายใจเหนื่อย หรือหายใจลำบาก\" ", style: style,),
+                          title: Text("ผู้ป่วยมีอาการระบบทางเดินหายใจ อย่างใดอย่างหนึ่งดังต่อไปนี้ \"ไอ น้ำมูก เจ็บคอ หายใจเหนื่อย หรือหายใจลำบาก\" ", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -168,7 +185,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่มีอาการใด ๆ ข้างต้น"),
+                          title: Text("ไม่มีอาการใด ๆ ข้างต้น", style: answerStyle),
                         ),
                       ),
                     ),
@@ -189,7 +206,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("มีอาการ"),
+                          title: Text("มีอาการ", style: answerStyle),
                         ),
                       ),
                     ),
@@ -203,7 +220,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("3", style: bulletStyle),
-                          title: Text("ผู้ป่วยมีประวัติเดินทางไปยัง หรือ มาจาก หรือ อาศัยอยู่ในพื้นที่เกิดโรค COVID-19 ในช่วงเวลา 14 วัน ก่อนป่วย", style: style,),
+                          title: Text("ผู้ป่วยมีประวัติเดินทางไปยัง หรือ มาจาก หรือ อาศัยอยู่ในพื้นที่เกิดโรค COVID-19 ในช่วงเวลา 14 วัน ก่อนป่วย", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -223,7 +240,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่มีประวัติ"),
+                          title: Text("ไม่มีประวัติ", style: answerStyle),
                         ),
                       ),
                     ),
@@ -244,7 +261,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("มีประวัติความเสี่ยง"),
+                          title: Text("มีประวัติความเสี่ยง", style: answerStyle),
                         ),
                       ),
                     ),
@@ -258,7 +275,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("4", style: bulletStyle),
-                          title: Text("อยู่ใกล้ชิดกับผู้ป่วยยืนยัน COVID-19 (ใกล้กว่า 1 เมตร นานเกิน 5 นาที) ในช่วง 14 วันก่อน ", style: style,),
+                          title: Text("อยู่ใกล้ชิดกับผู้ป่วยยืนยัน COVID-19 (ใกล้กว่า 1 เมตร นานเกิน 5 นาที) ในช่วง 14 วันก่อน ", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -278,7 +295,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่มี"),
+                          title: Text("ไม่มี", style: answerStyle),
                         ),
                       ),
                     ),
@@ -299,7 +316,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("มีความใกล้ชิดผู้ป่วย"),
+                          title: Text("มีความใกล้ชิดผู้ป่วย", style: answerStyle),
                         ),
                       ),
                     ),
@@ -313,7 +330,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("5", style: bulletStyle),
-                          title: Text("มีประวัติไปสถานที่ชุมนุมชน หรือสถานที่ที่มีการรวมกลุ่มคน เช่น ตลาดนัด ห้างสรรพสินค้า สถานพยาบาล หรือ ขนส่งสาธารณะ", style: style,),
+                          title: Text("มีประวัติไปสถานที่ชุมนุมชน หรือสถานที่ที่มีการรวมกลุ่มคน เช่น ตลาดนัด ห้างสรรพสินค้า สถานพยาบาล หรือ ขนส่งสาธารณะ", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -333,7 +350,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่มี"),
+                          title: Text("ไม่มี", style: answerStyle),
                         ),
                       ),
                     ),
@@ -354,7 +371,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("มี"),
+                          title: Text("มี", style: answerStyle),
                         ),
                       ),
                     ),
@@ -368,7 +385,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("6", style: bulletStyle),
-                          title: Text("ผู้ป่วยประกอบอาชีพที่สัมผัสใกล้ชิดกับนักท่องเที่ยวต่างชาติ สถานที่แออัด หรือติดต่อคนจำนวนมาก", style: style,),
+                          title: Text("ผู้ป่วยประกอบอาชีพที่สัมผัสใกล้ชิดกับนักท่องเที่ยวต่างชาติ สถานที่แออัด หรือติดต่อคนจำนวนมาก", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -388,7 +405,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่ใช่"),
+                          title: Text("ไม่ใช่", style: answerStyle),
                         ),
                       ),
                     ),
@@ -409,7 +426,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ใช่"),
+                          title: Text("ใช่", style: answerStyle),
                         ),
                       ),
                     ),
@@ -423,7 +440,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("7", style: bulletStyle),
-                          title: Text("เป็นบุคลากรทางการแพทย์", style: style,),
+                          title: Text("เป็นบุคลากรทางการแพทย์", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -443,7 +460,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่ใช่"),
+                          title: Text("ไม่ใช่", style: answerStyle),
                         ),
                       ),
                     ),
@@ -464,7 +481,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ใช่"),
+                          title: Text("ใช่", style: answerStyle),
                         ),
                       ),
                     ),
@@ -478,7 +495,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                       child: SizedBox(
                         child: ListTile(
                           leading: Text("8", style: bulletStyle),
-                          title: Text("มีผู้ใกล้ชิดป่วยเป็นไข้หวัดพร้อมกัน มากกว่า 5 คน ในช่วงสัปดาห์ที่ป่วย", style: style,),
+                          title: Text("มีผู้ใกล้ชิดป่วยเป็นไข้หวัดพร้อมกัน มากกว่า 5 คน ในช่วงสัปดาห์ที่ป่วย", style: questionStyle,),
                         ),
                       ),
                     ),
@@ -498,7 +515,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("ไม่มี"),
+                          title: Text("ไม่มี", style: answerStyle),
                         ),
                       ),
                     ),
@@ -519,7 +536,7 @@ class _SelfScreenPageState extends State<SelfScreenPage> {
                               });
                             },
                           ),
-                          title: Text("มี"),
+                          title: Text("มี", style: answerStyle),
                         ),
                       ),
                     ),
@@ -604,7 +621,7 @@ class SelfScreenResultPage extends StatefulWidget {
 }
 
 class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
-  //Read File
+    //Read File
   AuthenFileProcess authenFileProcess = new AuthenFileProcess();
   ProfileFileProcess profileFileProcess = new ProfileFileProcess();
 
@@ -617,26 +634,35 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
   //Progress Dialog
   ProgressDialog pr;
 
-  //Test Style
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  //Style
+  TextStyle style = GoogleFonts.prompt(
+      fontSize: 20,
+      color: Colors.white
+  );
 
-  TextStyle headStyle = TextStyle(
+  TextStyle styleButton = GoogleFonts.prompt(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  TextStyle headStyle = GoogleFonts.prompt(
     fontWeight: FontWeight.bold,
     fontSize: 20.0,
     color: Color.fromRGBO(0, 153, 0, 1),
   );
 
-  TextStyle labelStyle = TextStyle(
+  TextStyle labelStyle = GoogleFonts.prompt(
     fontWeight: FontWeight.bold,
     fontSize: 16.0,
     color: Color.fromRGBO(51, 102, 255, 1),
   );
 
-  TextStyle suggestStyle = TextStyle(
+  TextStyle suggestStyle = GoogleFonts.prompt(
     fontSize: 16.0,
   );
 
-  TextStyle scoreStyle = TextStyle(
+  TextStyle scoreStyle = GoogleFonts.prompt(
     fontWeight: FontWeight.bold,
     fontSize: 25.0,
     color: Color.fromRGBO(255, 51, 0, 1),
@@ -679,10 +705,11 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
         onPressed: () {
           _submitAssessment(context);
         },
-        child: Text("บันทึกผลประเมิน",
+        child: Text(
+            "บันทึกผลประเมิน",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton
+        ),
       ),
     );
 
@@ -699,16 +726,17 @@ class _SelfScreenResultPageState extends State<SelfScreenResultPage> {
             MaterialPageRoute(builder: (context) => SelfScreenPage()),
           );
         },
-        child: Text("ประเมินใหม่อีกครั้ง",
+        child: Text(
+            "ประเมินใหม่อีกครั้ง",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton
+        ),
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายงานผลประเมิน'),
+        title: Text('รายงานผลประเมิน', style: style),
         automaticallyImplyLeading: false,
       ),
       body: Center(

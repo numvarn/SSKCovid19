@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/pages/operations.dart';
@@ -24,7 +25,15 @@ class _LogInPageState extends State<LogInPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
+
+  TextStyle styleButton = GoogleFonts.prompt(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -74,8 +83,7 @@ class _LogInPageState extends State<LogInPage> {
     final loginButton = RoundedLoadingButton(
         child: Text("เข้าสู่ระบบ",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)
+            style: styleButton,
         ),
         controller: _btnController,
         width: MediaQuery.of(context).size.width,
@@ -95,10 +103,11 @@ class _LogInPageState extends State<LogInPage> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),);
         },
-        child: Text("ลงทะเบียนผู้ใช้งานใหม่",
+        child: Text(
+            "ลงทะเบียนผู้ใช้งานใหม่",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton
+        ),
       ),
     );
 
@@ -106,7 +115,7 @@ class _LogInPageState extends State<LogInPage> {
         onWillPop: _onWillPop,
         child:Scaffold(
           appBar: AppBar(
-            title: Text('เช้าใช้งานระบบ'),
+            title: Text('เช้าใช้งานระบบ', style: style),
             automaticallyImplyLeading: false,
           ),
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/pages/login.dart';
 
@@ -17,7 +18,15 @@ class RegisterPage extends StatelessWidget {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
+
+  TextStyle styleButton = GoogleFonts.prompt(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +86,14 @@ class RegisterPage extends StatelessWidget {
         },
         child: Text("ลงทะเบียนผู้ใช้งานใหม่",
             textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+            style: styleButton
+        ),
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("ลงทะเบียนใช้งานระบบ"),
+        title: Text("ลงทะเบียนใช้งานระบบ", style: style),
       ),
       body: Center(
         child: SingleChildScrollView (

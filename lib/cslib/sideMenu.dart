@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -11,28 +13,39 @@ import 'package:sskcovid19/pages/profile.dart';
 import 'package:sskcovid19/pages/login.dart';
 import 'package:sskcovid19/pages/self_screening.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawer extends StatefulWidget {
+  NavDrawer({Key key}) : super(key: key);
+
+  @override
+  _NavDrawerState createState() => _NavDrawerState();
+}
+
+class _NavDrawerState extends State<NavDrawer> {
+  AuthenFileProcess authenFileProcess = new AuthenFileProcess();
+  ProfileFileProcess profileFileProcess = new ProfileFileProcess();
+
+  String accountName;
+  String email;
+
+  @override
+  void initState() {
+    super.initState();
+    _getProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Text(
-              'รายการเมนู',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+          UserAccountsDrawerHeader(
+            accountName: Text('$accountName'),
+            accountEmail: Text('$email'),
+            currentAccountPicture: CircleAvatar(
+              child: FlutterLogo(size: 40.0,),
+              backgroundColor: Colors.white,
             ),
-            decoration: BoxDecoration(
-                color: Colors.green,
-                /*
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("assets/images/logo.png")
-                )
-                */
-            ),
-
           ),
           ListTile(
             leading: Icon(Icons.home),
@@ -101,11 +114,18 @@ class NavDrawer extends StatelessWidget {
     );
   }
 
-  void _logoutProcess(context) async {
-    //Read config file
-    AuthenFileProcess authenFileProcess = new AuthenFileProcess();
-    ProfileFileProcess profileFileProcess = new ProfileFileProcess();
+  void _getProfile() async {
+    var profile = profileFileProcess.readProfile();
+    profile.then((value) {
+      var profileJson = json.decode(value);
+      setState(() {
+        accountName = profileJson['results'][0]['first_name']+" "+profileJson['results'][0]['last_name'];
+        email = profileJson['results'][0]['email'];
+      });
+    });
+  }
 
+  void _logoutProcess(context) async {
     // Progress Dialog
     ProgressDialog pr = new ProgressDialog(context);
     pr.style(

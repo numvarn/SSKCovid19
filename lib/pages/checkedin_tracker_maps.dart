@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:sskcovid19/pages/checkedin_tracker.dart';
 
 class TrackerMapsPage extends StatefulWidget {
@@ -12,7 +14,14 @@ class TrackerMapsPage extends StatefulWidget {
 }
 
 class _TrackerMapsPageState extends State<TrackerMapsPage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  //Style
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
+
+  TextStyle titleStyle = GoogleFonts.prompt(
+    fontSize: 16,
+  );
 
   DateFormat dateFormat = DateFormat("dd-MM-yyyy HH:mm");
 
@@ -49,7 +58,7 @@ class _TrackerMapsPageState extends State<TrackerMapsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('ตำแหน่งที่เคยเดินทาง'),
+        title: Text('ตำแหน่งที่เคยเดินทาง', style: style),
       ),
       body: Column(
           children: [
@@ -85,7 +94,8 @@ class _TrackerMapsPageState extends State<TrackerMapsPage> {
                           "${history.district}\n"
                           "จังหวัด ${history.province}\n\n"
                           "เวลา ${history.date}\n"
-                          "พิกัด ${history.latitude}, ${history.longitude}"),
+                          "พิกัด ${history.latitude}, ${history.longitude}",
+                      style: titleStyle),
                     ),
                   ),
                 ),

@@ -12,7 +12,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="sskcovid19"
+        android:label="SSK\nCovid-19"
         android:icon="@mipmap/ic_launcher">
 
         <!-- Add the following entry, with your API key -->

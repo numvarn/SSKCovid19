@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:http/http.dart' as Http;
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sskcovid19/cslib/authenFileProcess.dart';
 import 'package:sskcovid19/cslib/profileFileProcess.dart';
@@ -37,6 +38,11 @@ class _CheckinPageState extends State<CheckinPage> {
   //For Communicate with API
   String Token;
   int userID;
+
+  //Style
+  TextStyle style = GoogleFonts.prompt(
+    fontSize: 20,
+  );
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -79,7 +85,7 @@ class _CheckinPageState extends State<CheckinPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('พิกัดที่อยู่ปัจจุบัน'),
+        title: Text('พิกัดที่อยู่ปัจจุบัน', style: style),
       ),
       body: GoogleMap(
         myLocationEnabled: true,
